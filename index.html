@@ -14,72 +14,41 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #f8fafc;
       min-height: 100vh;
-      color: #ffffff;
+      color: #1f2937;
       overflow-x: hidden;
     }
 
-    /* Animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
-      animation: float 20s ease-in-out infinite;
-      z-index: -1;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33% { transform: translateY(-20px) rotate(1deg); }
-      66% { transform: translateY(10px) rotate(-1deg); }
-    }
-
     header {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      background: #0f172a;
+      color: #ffffff;
       padding: 3rem 2rem;
       text-align: center;
       position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: shimmer 3s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
     }
 
     header h1 {
       font-size: 3rem;
-      font-weight: 300;
+      font-weight: 600;
       margin-bottom: 0.5rem;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+    }
+
+    .logo-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .logo {
+      height: 60px;
+      width: auto;
+      filter: brightness(0) invert(1);
     }
 
     header p {
       font-size: 1.2rem;
-      opacity: 0.9;
-      font-weight: 300;
+      color: #9ca3af;
+      font-weight: 400;
     }
 
     .container {
@@ -92,47 +61,27 @@
     }
 
     .course {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
       padding: 2rem;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       position: relative;
-      overflow: hidden;
       cursor: pointer;
-    }
-
-    .course::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-      transform: scaleX(0);
-      transition: transform 0.4s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
     .course:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.1),
-        0 0 0 1px rgba(255, 255, 255, 0.3);
-    }
-
-    .course:hover::before {
-      transform: scaleX(1);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: #2563eb;
     }
 
     .course h2 {
       font-size: 1.8rem;
-      font-weight: 400;
+      font-weight: 600;
       margin-bottom: 1rem;
-      color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      color: #1f2937;
     }
 
     .tags {
@@ -143,21 +92,20 @@
     }
 
     .tag {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #6b7280;
       padding: 0.4rem 0.8rem;
-      border-radius: 20px;
+      border-radius: 6px;
       font-size: 0.85rem;
-      font-weight: 300;
+      font-weight: 500;
       transition: all 0.3s ease;
     }
 
     .tag:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.05);
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
     }
 
     /* Liquid Popup Modal */
@@ -186,19 +134,14 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.8);
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 25px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
       padding: 3rem;
       max-width: 600px;
       width: 90%;
-      box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
       position: relative;
     }
 
@@ -216,10 +159,9 @@
 
     .modal-header h2 {
       font-size: 2.5rem;
-      font-weight: 300;
+      font-weight: 600;
       margin-bottom: 1rem;
-      color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      color: #1f2937;
     }
 
     .modal-tags {
@@ -231,21 +173,20 @@
     }
 
     .modal-tag {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #6b7280;
       padding: 0.5rem 1rem;
-      border-radius: 25px;
+      border-radius: 6px;
       font-size: 0.9rem;
-      font-weight: 300;
+      font-weight: 500;
       transition: all 0.3s ease;
     }
 
     .modal-tag:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.05);
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
     }
 
     .modal-section {
@@ -255,9 +196,9 @@
     .modal-section h3 {
       font-size: 1.3rem;
       margin-bottom: 1rem;
-      color: #ffffff;
-      font-weight: 400;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      color: #1f2937;
+      font-weight: 600;
+      border-bottom: 1px solid #e2e8f0;
       padding-bottom: 0.5rem;
     }
 
@@ -273,42 +214,42 @@
     }
 
     .modal-li::before {
-      content: '✦';
+      content: '•';
       position: absolute;
       left: 0;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 1rem;
+      color: #2563eb;
+      font-size: 1.2rem;
+      font-weight: bold;
     }
 
     .modal-contact-btn {
       display: inline-block;
       margin-top: 2rem;
       padding: 1rem 2rem;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: #2563eb;
+      border: 1px solid #2563eb;
       color: #ffffff;
       text-decoration: none;
-      border-radius: 30px;
-      font-weight: 400;
+      border-radius: 8px;
+      font-weight: 600;
       font-size: 1.1rem;
       transition: all 0.3s ease;
     }
 
     .modal-contact-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
     }
 
     .close-btn {
       position: absolute;
       top: 1rem;
       right: 1.5rem;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #6b7280;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -318,25 +259,21 @@
       cursor: pointer;
       font-size: 1.2rem;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
     }
 
     .close-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.1);
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
     }
 
     footer {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      background: #0f172a;
       color: #ffffff;
       text-align: center;
       padding: 2rem;
       margin-top: 4rem;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     /* Responsive design */
@@ -376,23 +313,26 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
+      background: #f1f5f9;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
+      background: #cbd5e1;
       border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.5);
+      background: #94a3b8;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Unacademy Course Recommendations</h1>
+  <div class="logo-container">
+    <img src="https://static.uacdn.net/production/_next/static/images/logo.svg?q=75&auto=format%2Ccompress&w=384" alt="Unacademy Logo" class="logo">
+  </div>
+  <h1>Course Recommendations</h1>
   <p>Explore Top Courses and Book a Free Demo</p>
 </header>
 
