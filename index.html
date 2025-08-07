@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unacademy Courses</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>!function(e,t,a){var c=e.head||e.getElementsByTagName("head")[0],n=e.createElement("script");n.async=!0,n.defer=!0, n.type="text/javascript",n.src=t+"/static/js/widget.js?config="+JSON.stringify(a),c.appendChild(n)}(document,"https://app.engati.com",{bot_key:"6ae04ad8a51d4e8a",welcome_msg:true,branding_key:"default",server:"https://app.engati.com",e:"p" });</script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(1deg); }
+      66% { transform: translateY(10px) rotate(-1deg); }
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .course {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .course::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .course:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .course:hover::before {
+      transform: scaleX(1);
+    }
+
+    .course h2 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 300;
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* Liquid Popup Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      padding: 3rem;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .modal-header h2 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-tag {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 300;
+      transition: all 0.3s ease;
+    }
+
+    .modal-tag:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+
+    .modal-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      font-weight: 400;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 0.5rem;
+    }
+
+    .modal-ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .modal-li {
+      padding: 0.5rem 0;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .modal-li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+    }
+
+    .modal-contact-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 400;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .modal-contact-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    footer {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      font-weight: 300;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .course {
+        padding: 1.5rem;
+      }
+
+      .modal-content {
+        padding: 2rem;
+        width: 95%;
+      }
+
+      .modal-header h2 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Focus styles for accessibility */
+    .course:focus {
+      outline: 2px solid rgba(255, 255, 255, 0.5);
+      outline-offset: 2px;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Unacademy Course Recommendations</h1>
+  <p>Explore Top Courses and Book a Free Demo</p>
+</header>
+
+<div class="container">
+  <!-- UPSC -->
+  <div class="course" onclick="openModal('upsc')" tabindex="0">
+    <h2>UPSC Civil Services</h2>
+    <div class="tags">
+      <span class="tag">Online</span>
+      <span class="tag">Offline: Delhi, Bangalore, Hyderabad</span>
+      <span class="tag">Duration: 12-24 months</span>
+    </div>
+  </div>
+
+  <!-- JEE -->
+  <div class="course" onclick="openModal('jee')" tabindex="0">
+    <h2>IIT JEE Preparation</h2>
+    <div class="tags">
+      <span class="tag">Online</span>
+      <span class="tag">Offline: Kota, Hyderabad, Chennai</span>
+      <span class="tag">Duration: 1-2 years</span>
+    </div>
+  </div>
+
+  <!-- NEET -->
+  <div class="course" onclick="openModal('neet')" tabindex="0">
+    <h2>NEET UG Medical</h2>
+    <div class="tags">
+      <span class="tag">Online</span>
+      <span class="tag">Offline: Kota, Pune, Chennai</span>
+      <span class="tag">Duration: 1-2 years</span>
+    </div>
+  </div>
+
+  <!-- SSC & Banking -->
+  <div class="course" onclick="openModal('ssc')" tabindex="0">
+    <h2>SSC & Banking Exams</h2>
+    <div class="tags">
+      <span class="tag">Online Only</span>
+      <span class="tag">Duration: 6-12 months</span>
+    </div>
+  </div>
+
+  <!-- CBSE -->
+  <div class="course" onclick="openModal('cbse')" tabindex="0">
+    <h2>CBSE Class 10 & 12</h2>
+    <div class="tags">
+      <span class="tag">Online Only</span>
+      <span class="tag">Duration: 1 Academic Year</span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Overlay -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-content">
+    <div class="close-btn" onclick="closeModal()">×</div>
+    <div id="modalContent">
+      <!-- Content will be dynamically inserted here -->
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Unacademy Course Portal | For Demo & Enrollment, Contact Us
+</footer>
+
+<script>
+  const courseData = {
+    upsc: {
+      title: "UPSC Civil Services",
+      tags: ["Online", "Offline: Delhi, Bangalore, Hyderabad", "Duration: 12-24 months"],
+      trainers: ["Roman Saini", "Mudit Gupta", "Aayush Sanghi", "Sudarshan Gurjar"],
+      syllabus: [
+        "Prelims: GS Paper I, CSAT (Paper II)",
+        "Mains: Essay, GS I-IV, Optional Subjects",
+        "Interview: Personality Test",
+        "Current Affairs",
+        "NCERT Foundation"
+      ]
+    },
+    jee: {
+      title: "IIT JEE Preparation",
+      tags: ["Online", "Offline: Kota, Hyderabad, Chennai", "Duration: 1-2 years"],
+      trainers: ["Namo Kaul", "Mohit Tyagi", "Ashwani Tyagi", "Ravindra P"],
+      syllabus: [
+        "Physics: Mechanics, Optics, Electrodynamics, Modern Physics",
+        "Chemistry: Organic, Inorganic, Physical",
+        "Mathematics: Algebra, Calculus, Coordinate Geometry",
+        "Mock Tests and PYQs"
+      ]
+    },
+    neet: {
+      title: "NEET UG Medical",
+      tags: ["Online", "Offline: Kota, Pune, Chennai", "Duration: 1-2 years"],
+      trainers: ["Dr. Amit Gupta", "Sachin Kapoor", "Vivek Singh", "Ashish Arora"],
+      syllabus: [
+        "Physics: Mechanics, Thermodynamics, Electromagnetism",
+        "Chemistry: Organic, Inorganic, Physical",
+        "Biology: Botany, Zoology (NCERT-focused)",
+        "Mock Tests and Previous Year Papers"
+      ]
+    },
+    ssc: {
+      title: "SSC & Banking Exams",
+      tags: ["Online Only", "Duration: 6-12 months"],
+      trainers: ["Sahil Khandelwal", "Rani Singh", "Aashish Arora", "Naman Shrivastava"],
+      syllabus: [
+        "Quantitative Aptitude",
+        "Reasoning Ability",
+        "English Language",
+        "General Awareness",
+        "Mock Tests and Practice Sets"
+      ]
+    },
+    cbse: {
+      title: "CBSE Class 10 & 12",
+      tags: ["Online Only", "Duration: 1 Academic Year"],
+      trainers: ["Sushmita Dey", "Ashwini Rathi", "Deepika Reddy", "Sanjay Mishra"],
+      syllabus: [
+        "Class 10: Maths, Science, Social Studies, English, Hindi",
+        "Class 12 Science: Physics, Chemistry, Biology/Maths, English",
+        "Class 12 Commerce: Accountancy, Economics, Business Studies, English",
+        "Regular Tests and CBSE Sample Paper Solving"
+      ]
+    }
+  };
+
+  function openModal(courseId) {
+    const course = courseData[courseId];
+    const modalContent = document.getElementById('modalContent');
+    
+    modalContent.innerHTML = `
+      <div class="modal-header">
+        <h2>${course.title}</h2>
+        <div class="modal-tags">
+          ${course.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('')}
+        </div>
+      </div>
+      
+      <div class="modal-section">
+        <h3>Top Trainers:</h3>
+        <ul class="modal-ul">
+          ${course.trainers.map(trainer => `<li class="modal-li">${trainer}</li>`).join('')}
+        </ul>
+      </div>
+      
+      <div class="modal-section">
+        <h3>Syllabus:</h3>
+        <ul class="modal-ul">
+          ${course.syllabus.map(item => `<li class="modal-li">${item}</li>`).join('')}
+        </ul>
+      </div>
+      
+      <a href="#" class="modal-contact-btn">Contact for Demo</a>
+    `;
+    
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close modal when clicking outside
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+</script>
+
+</body>
+</html>
